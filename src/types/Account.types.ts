@@ -1,9 +1,9 @@
-type Account = {
+export type AccountWithBalance = {
   account: string;
   balance: string;
 };
 
-type Transaction = {
+export type Transaction = {
   blockNumber: string;
   timeStamp: string;
   hash: string;
@@ -24,7 +24,22 @@ type Transaction = {
   confirmations: string;
 };
 
-export type GetBalancesResponse = Account[];
+export type InternalTransaction = {
+  blockNumber: string;
+  timeStamp: string;
+  hash: string;
+  from: string;
+  to: string;
+  value: string;
+  contractAddress: string;
+  input: string;
+  type: string;
+  gas: string;
+  gasUsed: string;
+  traceId: string;
+  isError: string;
+  errCode: string;
+};
 
 export type GetTransactionsParams = {
   address: string;
@@ -34,6 +49,4 @@ export type GetTransactionsParams = {
   offset?: number;
   sort?: 'asc' | 'desc';
 };
-
-export type GetTransactionsResponse = Transaction[];
 

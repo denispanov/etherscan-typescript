@@ -7,12 +7,13 @@ export default abstract class ApiClient {
     url.searchParams.append('apikey', this.apiKey);
     const response = await fetch(url.toString());
     if (!response.ok) {
-      throw new Error(`Failed to fetch from Etherscan: ${response.statusText}`);
+      throw new Error(`Request failed: ${response.statusText}`);
     }
 
-    const data = await response.json() as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+    const data: any = await response.json();
     if (data.status !== "1") {
-      throw new Error(`Error from Etherscan: ${data.message}`);
+      console.log(data);
+      throw new Error(`Request failed: ${data.message} - ${data.result}`);
     }
 
     return data.result;
