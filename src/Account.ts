@@ -1,31 +1,31 @@
-import ApiClient from "./ApiClient";
+import ApiClient from './ApiClient';
 import type {
   AccountWithBalance,
   GetTransactionsParams,
   InternalTransaction,
   Transaction,
-} from "./types/Account.types";
+} from './types/Account.types';
 
 export default class Account extends ApiClient {
   constructor(apiKey: string, baseUrl: string) {
-    super(apiKey, baseUrl, "account");
+    super(apiKey, baseUrl, 'account');
   }
 
-   /**
+  /**
    * @param address - The address to query the balance for.
    * @returns The balance of the address in Wei.
-   * @example 
+   * @example
    * const balance = await account.getBalance('0x123...');
    * console.log(balance);
    * // '1000000000000000000'
    */
-   public async getBalance(address: string) {
+  public async getBalance(address: string) {
     const url = this.createUrl();
     url.searchParams.append('action', 'balance');
     url.searchParams.append('address', address);
     url.searchParams.append('tag', 'latest');
 
-    return await this.get<string>(url);
+    return this.get<string>(url);
   }
 
   /**
@@ -41,7 +41,7 @@ export default class Account extends ApiClient {
    * // ]
    */
   public async getBalances(addresses: string[]) {
-    if(addresses.length > 20) {
+    if (addresses.length > 20) {
       throw new Error('Maximum of 20 addresses allowed');
     }
 
@@ -50,7 +50,7 @@ export default class Account extends ApiClient {
     url.searchParams.append('address', addresses.join(','));
     url.searchParams.append('tag', 'latest');
 
-    return await this.get<AccountWithBalance[]>(url);
+    return this.get<AccountWithBalance[]>(url);
   }
 
   public async getTransactions(params: GetTransactionsParams) {
@@ -63,8 +63,7 @@ export default class Account extends ApiClient {
     url.searchParams.append('offset', (params.offset ?? 10).toString());
     url.searchParams.append('sort', params.sort ?? 'asc');
 
-    console.log(url.toString());
-    return await this.get<Transaction[]>(url);
+    return this.get<Transaction[]>(url);
   }
 
   public async getInternalTransactions(params: GetTransactionsParams) {
@@ -77,7 +76,6 @@ export default class Account extends ApiClient {
     url.searchParams.append('offset', (params.offset ?? 10).toString());
     url.searchParams.append('sort', params.sort ?? 'asc');
 
-    return await this.get<InternalTransaction[]>(url);
+    return this.get<InternalTransaction[]>(url);
   }
 }
-

@@ -1,7 +1,17 @@
-import { URL } from "url";
+import { URL } from 'url';
 
 export default abstract class ApiClient {
-  constructor(private apiKey: string, private baseUrl: string, private module: string) {}
+  private apiKey: string;
+
+  private baseUrl: string;
+
+  private module: string;
+
+  constructor(apiKey: string, baseUrl: string, module: string) {
+    this.apiKey = apiKey;
+    this.baseUrl = baseUrl;
+    this.module = module;
+  }
 
   protected async get<ResponseType>(url: URL): Promise<ResponseType> {
     url.searchParams.append('apikey', this.apiKey);
@@ -11,8 +21,7 @@ export default abstract class ApiClient {
     }
 
     const data: any = await response.json();
-    if (data.status !== "1") {
-      console.log(data);
+    if (data.status !== '1') {
       throw new Error(`Request failed: ${data.message} - ${data.result}`);
     }
 
@@ -20,10 +29,9 @@ export default abstract class ApiClient {
   }
 
   protected createUrl() {
-    const url =  new URL(this.baseUrl);
+    const url = new URL(this.baseUrl);
     url.searchParams.append('apikey', this.apiKey);
     url.searchParams.append('module', this.module);
     return url;
   }
 }
-

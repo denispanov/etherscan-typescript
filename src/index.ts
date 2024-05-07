@@ -1,3 +1,3 @@
-import EtherScan from "./Etherscan";
+import EtherScan from './Etherscan';
 
 export { EtherScan };

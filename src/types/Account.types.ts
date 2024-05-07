@@ -49,4 +49,3 @@ export type GetTransactionsParams = {
   offset?: number;
   sort?: 'asc' | 'desc';
 };
-

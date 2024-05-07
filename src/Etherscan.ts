@@ -1,12 +1,14 @@
-import Account from "./Account";
-import Contract from "./Contract";
+import Account from './Account';
+import Contract from './Contract';
 
-const DEFAULT_URL = "https://api.etherscan.io/api";
-
+const DEFAULT_URL = 'https://api.etherscan.io/api';
 export default class EtherScan {
   private apiKey: string;
+
   private baseUrl: string;
+
   public account: Account;
+
   public contract: Contract;
 
   constructor(apiKey: string, baseUrl?: string) {
@@ -16,4 +18,3 @@ export default class EtherScan {
     this.contract = new Contract(this.apiKey, this.baseUrl);
   }
 }
-
