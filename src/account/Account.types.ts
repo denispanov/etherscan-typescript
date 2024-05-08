@@ -41,6 +41,8 @@ export type InternalTransaction = {
   errCode: string;
 };
 
+export type InternalTransactionByHash = Omit<InternalTransaction, 'hash' | 'traceId'>;
+
 export type GetTransactionsParams = {
   address: string;
   startBlock?: number;

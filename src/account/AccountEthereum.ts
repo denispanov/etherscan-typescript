@@ -5,10 +5,10 @@ import type {
 } from './Account.types';
 
 /**
- * This includes all the functionality of the Account class,
+ * This includes all the functionality of the AccountL1 class,
  * but with additional methods only relevant to Ethereum.
  */
-export default class AccountExtended extends AccountL1 {
+export default class AccountEthereum extends AccountL1 {
   /**
    * Retrieves beacon chain withdrawals made to an address.
    * @param params.address - The address to check for beacon withdrawals.

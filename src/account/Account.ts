@@ -9,6 +9,7 @@ import type {
   InternalTransaction,
   Transaction,
   ERC1155TransferEvent,
+  InternalTransactionByHash,
 } from './Account.types';
 
 export default class Account extends ApiClient {
@@ -113,7 +114,7 @@ export default class Account extends ApiClient {
     url.searchParams.append('action', 'txlistinternal');
     url.searchParams.append('txhash', txHash);
 
-    return this.get<InternalTransaction[]>(url);
+    return this.get<InternalTransactionByHash[]>(url);
   }
 
   /**

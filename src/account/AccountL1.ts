@@ -5,7 +5,7 @@ import type {
 
 /**
  * This includes all the functionality of the Account class,
- * but with additional methods only relevant to Ethereum.
+ * but with additional methods only relevant for Layer 1 blockchains.
  */
 export default class AccountL1 extends Account {
   /**

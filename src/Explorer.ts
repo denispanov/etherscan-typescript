@@ -1,6 +1,6 @@
 import Account from './account/Account';
 import AccountEthereum from './account/AccountEthereum';
-import Contract from './Contract';
+import Contract from './contract/Contract';
 import AccountL1 from './account/AccountL1';
 
 export default abstract class Explorer {
