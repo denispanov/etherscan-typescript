@@ -158,7 +158,6 @@ export default class Account extends ApiClient {
     }
 
     const url = this.createUrl();
-    url.searchParams.append('module', 'account');
     url.searchParams.append('action', 'tokentx');
 
     if (params.contractAddress) {

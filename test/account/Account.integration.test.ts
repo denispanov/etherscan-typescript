@@ -2,6 +2,7 @@ import {
   expect, test, describe, beforeAll,
 } from 'bun:test';
 import Account from '../../src/account/Account';
+import type { ERC20TransferEvent } from '../../src/account/Account.types';
 
 describe('Account', () => {
   let account: Account;
@@ -102,6 +103,84 @@ describe('Account', () => {
         expect(tx).toHaveProperty('gasUsed');
         expect(tx).toHaveProperty('isError');
         expect(tx).toHaveProperty('errCode');
+      });
+    });
+  });
+
+  describe('getInternalTransactionsByBlockRange', () => {
+    test('should return an array of internal transactions with all required properties', async () => {
+      const startBlock = 0;
+      const endBlock = 99999999;
+      const transactions = await account.getInternalTransactionsByBlockRange({
+        startBlock,
+        endBlock,
+      });
+      expect(transactions).toHaveLength(10); // Default is 10
+      transactions.forEach((tx) => {
+        expect(tx).toHaveProperty('blockNumber');
+        expect(tx).toHaveProperty('timeStamp');
+        expect(tx).toHaveProperty('hash');
+        expect(tx).toHaveProperty('from');
+        expect(tx).toHaveProperty('to');
+        expect(tx).toHaveProperty('value');
+        expect(tx).toHaveProperty('contractAddress');
+        expect(tx).toHaveProperty('input');
+        expect(tx).toHaveProperty('type');
+        expect(tx).toHaveProperty('gas');
+        expect(tx).toHaveProperty('gasUsed');
+        expect(tx).toHaveProperty('traceId');
+        expect(tx).toHaveProperty('isError');
+        expect(tx).toHaveProperty('errCode');
+      });
+    });
+  });
+
+  describe('getErc20TransferEvents', () => {
+    async function checkEventProperties(event: ERC20TransferEvent) {
+      expect(event).toHaveProperty('blockNumber');
+      expect(event).toHaveProperty('timeStamp');
+      expect(event).toHaveProperty('hash');
+      expect(event).toHaveProperty('nonce');
+      expect(event).toHaveProperty('blockHash');
+      expect(event).toHaveProperty('from');
+      expect(event).toHaveProperty('contractAddress');
+      expect(event).toHaveProperty('to');
+      expect(event).toHaveProperty('value');
+      expect(event).toHaveProperty('tokenName');
+      expect(event).toHaveProperty('tokenSymbol');
+      expect(event).toHaveProperty('tokenDecimal');
+      expect(event).toHaveProperty('transactionIndex');
+      expect(event).toHaveProperty('gas');
+      expect(event).toHaveProperty('gasPrice');
+      expect(event).toHaveProperty('gasUsed');
+      expect(event).toHaveProperty('cumulativeGasUsed');
+      expect(event).toHaveProperty('input');
+      expect(event).toHaveProperty('confirmations');
+    }
+
+    test("should throw an error if neither 'address' nor 'contractAddress' is provided", async () => {
+      expect(account.getErc20TransferEvents({})).rejects.toThrow('Either address or contractAddress must be provided');
+    });
+
+    test('should return an array of ERC20 transfer events for the given contract address', async () => {
+      const contractAddress = '0xdAC17F958D2ee523a2206206994597C13D831ec7'; // USDT on Ethereum
+      const events = await account.getErc20TransferEvents({
+        contractAddress,
+      });
+      expect(events).toHaveLength(10); // Default is 10
+      events.forEach((event) => {
+        checkEventProperties(event);
+      });
+    });
+
+    test('should return an array of ERC20 transfer events for the given address', async () => {
+      const address = '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045';
+      const events = await account.getErc20TransferEvents({
+        address,
+      });
+      expect(events).toHaveLength(10); // Default is 10
+      events.forEach((event) => {
+        checkEventProperties(event);
       });
     });
   });
