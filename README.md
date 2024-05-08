@@ -4,10 +4,16 @@ A TypeScript library for interacting with the Etherscan API, enabling developers
 
 ## Installation
 
-To install the library, use npm:
+To install the library, you can use either npm or bun:
 
-```
+```bash
 npm install etherscan-typescript
+```
+
+or
+
+```bash
+bun add etherscan-typescript
 ```
 
 ## Usage
