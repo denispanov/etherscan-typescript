@@ -1,7 +1,7 @@
 import Account from './Account';
 import type {
   GetBlocksByAddressParams,
-} from './types/Account.types';
+} from './Account.types';
 
 /**
  * This includes all the functionality of the Account class,

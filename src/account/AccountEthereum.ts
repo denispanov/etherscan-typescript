@@ -2,7 +2,7 @@ import AccountL1 from './AccountL1';
 import type {
   GetBeaconChainWithdrawalsParams,
   BeaconChainWithdrawal,
-} from './types/Account.types';
+} from './Account.types';
 
 /**
  * This includes all the functionality of the Account class,

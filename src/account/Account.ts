@@ -1,4 +1,4 @@
-import ApiClient from './ApiClient';
+import ApiClient from '../ApiClient';
 import type {
   AccountWithBalance,
   ERC20TransferEvent,
@@ -9,7 +9,7 @@ import type {
   InternalTransaction,
   Transaction,
   ERC1155TransferEvent,
-} from './types/Account.types';
+} from './Account.types';
 
 export default class Account extends ApiClient {
   constructor(apiKey: string, baseUrl: string) {
