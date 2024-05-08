@@ -1,6 +1,7 @@
 import Account from './Account';
-import AccountExtended from './AccountExtended';
+import AccountEthereum from './AccountEthereum';
 import Contract from './Contract';
+import AccountL1 from './AccountL1';
 
 export default abstract class Explorer {
   private apiKey: string;
@@ -11,12 +12,16 @@ export default abstract class Explorer {
 
   public contract: Contract;
 
-  constructor(apiKey: string, baseUrl: string, isEthereum = false) {
+  constructor(apiKey: string, baseUrl: string, isL1: boolean, isEthereum: boolean) {
     this.apiKey = apiKey;
     this.baseUrl = baseUrl;
-    this.account = isEthereum
-      ? new AccountExtended(this.apiKey, this.baseUrl)
-      : new Account(this.apiKey, this.baseUrl);
+    if (isEthereum) {
+      this.account = new AccountEthereum(this.apiKey, this.baseUrl);
+    } else if (isL1) {
+      this.account = new AccountL1(this.apiKey, this.baseUrl);
+    } else {
+      this.account = new Account(this.apiKey, this.baseUrl);
+    }
     this.contract = new Contract(this.apiKey, this.baseUrl);
   }
 }
