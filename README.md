@@ -1,6 +1,6 @@
 # etherscan-typescript
 
-A TypeScript library for interacting with the Etherscan API, enabling developers to easily fetch blockchain data directly through Etherscan's interfaces.
+A TypeScript library for interacting with the Etherscan API and other Etherscan-like explorers from different EVM chains, enabling developers to easily fetch blockchain data directly through these interfaces.
 
 ## Installation
 
@@ -27,7 +27,7 @@ const apiKey = 'YOUR_ETHERSCAN_API_KEY';
 const etherscan = new EtherScan(apiKey);
 ```
 
-### Example: Fetching an Account Balance
+### Example: Fetching an Account Balance from Etherscan
 
 You can retrieve the balance of an Ethereum address as follows:
 
@@ -41,6 +41,25 @@ async function getBalance() {
 getBalance();
 ```
 
+### Using Other Explorers like Arbiscan
+
+The library also supports other Etherscan-like explorers. For example, interacting with Arbiscan is as straightforward as using the EtherScan class. Import the `ArbiScan` class and use it in the same way:
+
+```typescript
+import { ArbiScan } from 'etherscan-typescript';
+
+const apiKey = 'YOUR_ARBISCAN_API_KEY';
+const arbiscan = new ArbiScan(apiKey);
+
+async function getBalanceOnArbitrum() {
+  const address = '0x...'; // Specify the Arbitrum address
+  const balance = await arbiscan.account.getBalance(address);
+  console.log(balance);
+}
+
+getBalanceOnArbitrum();
+```
+
 ## Features
 
 The `etherscan-typescript` library provides access to various Etherscan API functionalities, including but not limited to:
@@ -49,6 +68,8 @@ The `etherscan-typescript` library provides access to various Etherscan API func
 - **Contract API**: Retrieve contract ABI, source code, and other contract-related data.
 - **Transaction API**: Check transaction status and gas used.
 - **Blocks API**: Information on blocks and uncle blocks by number or date.
+
+Additionally, this library supports similar functionalities across multiple EVM-compatible block explorers like Arbiscan, BscScan, and more.
 
 ## Contributing
 

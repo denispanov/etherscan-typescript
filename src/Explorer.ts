@@ -1,8 +1,7 @@
 import Account from './Account';
 import Contract from './Contract';
 
-const DEFAULT_URL = 'https://api.etherscan.io/api';
-export default class EtherScan {
+export default abstract class Explorer {
   private apiKey: string;
 
   private baseUrl: string;
@@ -11,9 +10,9 @@ export default class EtherScan {
 
   public contract: Contract;
 
-  constructor(apiKey: string, baseUrl?: string) {
+  constructor(apiKey: string, baseUrl: string) {
     this.apiKey = apiKey;
-    this.baseUrl = baseUrl || DEFAULT_URL;
+    this.baseUrl = baseUrl;
     this.account = new Account(this.apiKey, this.baseUrl);
     this.contract = new Contract(this.apiKey, this.baseUrl);
   }

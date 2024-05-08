@@ -1,3 +1,7 @@
-import EtherScan from './Etherscan';
+import EtherScan from './explorers/Etherscan';
+import Arbiscan from './explorers/Arbiscan';
 
-export { EtherScan };
+export {
+  EtherScan,
+  Arbiscan,
+};
