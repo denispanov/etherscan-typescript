@@ -194,7 +194,6 @@ export default class Account extends ApiClient {
     }
 
     const url = this.createUrl();
-    url.searchParams.append('module', 'account');
     url.searchParams.append('action', 'tokennfttx');
 
     if (params.contractAddress) {
@@ -231,7 +230,6 @@ export default class Account extends ApiClient {
     }
 
     const url = this.createUrl();
-    url.searchParams.append('module', 'account');
     url.searchParams.append('action', 'token1155tx');
 
     if (params.contractAddress) {
@@ -260,7 +258,6 @@ export default class Account extends ApiClient {
    */
   public async getHistoricalEthBalance(address: string, blockNumber: number) {
     const url = this.createUrl();
-    url.searchParams.append('module', 'account');
     url.searchParams.append('action', 'balancehistory');
     url.searchParams.append('address', address);
     url.searchParams.append('blockno', blockNumber.toString());

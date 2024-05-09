@@ -2,7 +2,7 @@ import {
   expect, test, describe, beforeAll,
 } from 'bun:test';
 import Account from '../../src/account/Account';
-import type { ERC20TransferEvent } from '../../src/account/Account.types';
+import type { ERC1155TransferEvent, ERC20TransferEvent, Erc721TransferEvent } from '../../src/account/Account.types';
 
 describe('Account', () => {
   let account: Account;
@@ -176,6 +176,106 @@ describe('Account', () => {
     test('should return an array of ERC20 transfer events for the given address', async () => {
       const address = '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045';
       const events = await account.getErc20TransferEvents({
+        address,
+      });
+      expect(events).toHaveLength(10); // Default is 10
+      events.forEach((event) => {
+        checkEventProperties(event);
+      });
+    });
+  });
+
+  describe('getErc721TransferEvents', () => {
+    async function checkEventProperties(event: Erc721TransferEvent) {
+      expect(event).toHaveProperty('blockNumber');
+      expect(event).toHaveProperty('timeStamp');
+      expect(event).toHaveProperty('hash');
+      expect(event).toHaveProperty('nonce');
+      expect(event).toHaveProperty('blockHash');
+      expect(event).toHaveProperty('from');
+      expect(event).toHaveProperty('contractAddress');
+      expect(event).toHaveProperty('to');
+      expect(event).toHaveProperty('tokenID');
+      expect(event).toHaveProperty('tokenName');
+      expect(event).toHaveProperty('tokenSymbol');
+      expect(event).toHaveProperty('tokenDecimal');
+      expect(event).toHaveProperty('transactionIndex');
+      expect(event).toHaveProperty('gas');
+      expect(event).toHaveProperty('gasPrice');
+      expect(event).toHaveProperty('gasUsed');
+      expect(event).toHaveProperty('cumulativeGasUsed');
+      expect(event).toHaveProperty('input');
+      expect(event).toHaveProperty('confirmations');
+    }
+
+    test("should throw an error if neither 'address' nor 'contractAddress' is provided", async () => {
+      expect(account.getErc721TransferEvents({})).rejects.toThrow('Either address or contractAddress must be provided');
+    });
+
+    test('should return an array of ERC721 transfer events for the given contract address', async () => {
+      const contractAddress = '0x06012c8cf97bead5deae237070f9587f8e7a266d'; // CryptoKitties
+      const events = await account.getErc721TransferEvents({
+        contractAddress,
+      });
+      expect(events).toHaveLength(10); // Default is 10
+      events.forEach((event) => {
+        checkEventProperties(event);
+      });
+    });
+
+    test('should return an array of ERC721 transfer events for the given address', async () => {
+      const address = '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045';
+      const events = await account.getErc721TransferEvents({
+        address,
+      });
+      expect(events).toHaveLength(10); // Default is 10
+      events.forEach((event) => {
+        checkEventProperties(event);
+      });
+    });
+  });
+
+  describe('getErc1155TransferEvents', () => {
+    async function checkEventProperties(event: ERC1155TransferEvent) {
+      expect(event).toHaveProperty('blockNumber');
+      expect(event).toHaveProperty('timeStamp');
+      expect(event).toHaveProperty('hash');
+      expect(event).toHaveProperty('nonce');
+      expect(event).toHaveProperty('blockHash');
+      expect(event).toHaveProperty('from');
+      expect(event).toHaveProperty('contractAddress');
+      expect(event).toHaveProperty('to');
+      expect(event).toHaveProperty('tokenID');
+      expect(event).toHaveProperty('tokenValue');
+      expect(event).toHaveProperty('tokenName');
+      expect(event).toHaveProperty('tokenSymbol');
+      expect(event).toHaveProperty('transactionIndex');
+      expect(event).toHaveProperty('gas');
+      expect(event).toHaveProperty('gasPrice');
+      expect(event).toHaveProperty('gasUsed');
+      expect(event).toHaveProperty('cumulativeGasUsed');
+      expect(event).toHaveProperty('input');
+      expect(event).toHaveProperty('confirmations');
+    }
+
+    test("should throw an error if neither 'address' nor 'contractAddress' is provided", async () => {
+      expect(account.getErc1155TransferEvents({})).rejects.toThrow('Either address or contractAddress must be provided');
+    });
+
+    test('should return an array of ERC1155 transfer events for the given contract address', async () => {
+      const contractAddress = '0x76be3b62873462d2142405439777e971754e8e77'; // Example ERC1155 contract address
+      const events = await account.getErc1155TransferEvents({
+        contractAddress,
+      });
+      expect(events).toHaveLength(10); // Default is 10
+      events.forEach((event) => {
+        checkEventProperties(event);
+      });
+    });
+
+    test('should return an array of ERC1155 transfer events for the given address', async () => {
+      const address = '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045';
+      const events = await account.getErc1155TransferEvents({
         address,
       });
       expect(events).toHaveLength(10); // Default is 10
